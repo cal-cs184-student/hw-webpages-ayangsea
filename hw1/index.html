@@ -28,20 +28,20 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Andy Yang and Owen Ye</div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: (TODO) <a href="https://cal-cs184-student.github.io/hw-webpages-ayangsea/">https://cal-cs184-student.github.io/hw-webpages-ayangsea/</a>
 		
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/hw-webpages-ayangsea">https://github.com/cal-cs184-student/hw-webpages-ayangsea</a>
 
-		<figure>
+		<!-- <figure>
 			<img src="lion.jpg" alt="Lion" style="width:50%"/>
 			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		</figure> -->
 
 		<!--
 		We've already added one heading per task, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -51,9 +51,26 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>1. First, we draw the bounding box around the triangle. To get the edges of the bounding box, we take the min (floor) and max (ceil) of the x and y coordinates
+			  of the three vertices of the triangle. Next, we loop through each point that lies inside the bounding box, and for each point, we calculate the center of that pixel
+			  by adding 0.5 to the x and y coordinates. To determine whether or not the center of the pixel, we first define an edge function, which takes in the coordinates of 3 points,
+			  lets call them A, B and P, and calculates the signed area of the triangle formed by the 3 points. If the area is positive, it means that the triangle is going clockwise, and vice
+			  versea. Thus, the edge function returns positive if P is to the right of the line AB, and negative if P is to the left of the line AB. If we calculate the edge function for all
+			  3 edges of the triangle with our pixel center, the pixel center will be within the triangle only if all 3 values returned by the edge function are all positive or all negative.
+		</p>
+		<p>
+			2. Our algorithm is no worse than one that checks each sample within the bounding box of the triangle because we calculate the bounding box at the beginning of the fuction,
+			and only loop through the points within the bounding box.
+		</p>
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<p>
+		<figure>
+			<img src="svg4.png" alt="svg4" style="width:50%"/>
+			<figcaption>Screenshot of svg4 with interesting portion highlighted</figcaption>
+		</figure>
+		</p>
+
+		<!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -77,7 +94,7 @@
 				</td>
 			  </tr>
 			</table>
-		</div>
+		</div> -->
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
