@@ -48,7 +48,20 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		<p>
+			In this project, we implemented a triangle rasterization and texture mapping pipeline with multiple techniques to improve rendering quality. We started by only rasterizing single
+			color triangles, without any additional techniques to reduce jaggies. Next, we added supersampling antialiasing, allowing us to sample at higher rates resulting in smoother edges 
+			by averaging multiple subpixels per pixel. Next, we used barycentric coordinates to interpolate point within shapes to produce smooth color gradients, like that seen in svg7.
+			For texture mapping, we implemented nearest neighbor and bilinear pixel sampling, observing that bilinear interpolation significantly reduces blockiness and 
+			aliasing. Finally, we added mipmap-based level sampling to handle texture minification, selecting appropriate resolution levels using UV derivatives to balance visual quality, 
+			memory usage, and performance.
+		</p>
+		<p>
+			Overall, we learned a lot from this project. Initially, I still struggled with the idea of rasterization and by the end of the project we added multiple techniques onto the 
+			basic rasterization pipeline allowing us to drastically improve our image quality. One of our favorite parts of the homework was really getting to understand bilinear interpolation,
+			and creating really cool color gradients with barycentric coordinates. I enjoyed learning about the relationship between linear interpolation, bilinear interpolation, and how barycentric
+			coordinates is merely an extension of those concepts.
+		</p>
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		<p>1. First, we draw the bounding box around the triangle. To get the edges of the bounding box, we take the min (floor) and max (ceil) of the x and y coordinates
