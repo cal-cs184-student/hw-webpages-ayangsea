@@ -128,8 +128,39 @@
 	</table>
 </div>
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		To implement the edge flip, I first added a boundary check. Initially, I traversed to the adjacent faces and checked their boundaries, but I realized I could just call isBoundary() directly on the edge itself, so I simplified it to that. Next, I collected all the mesh elements that would need to be updated: the 6 halfedges, 4 vertices, 2 faces, and 4 outer edges. For my implementation, I flipped the edge in a counterclockwise direction.
+		I kept the same halfedge iterators but rewired their attributes using setNeighbors to point to the correct vertices, next halfedges, and faces for the flipped configuration. I also updated the halfedge pointers for each vertex, face, and edge to make sure they still referenced valid halfedges after the flip. The most difficult part of debugging was figuring out which direction the flip should go and making sure the next pointers for each 
+		halfedge were correct. I solved this by drawing the before and after diagrams on paper and tracing through which halfedge should come next as I walked around each triangle in the flipped configuration.
+<div style="display: flex; flex-direction: column; align-items: center;">
+	<table style="width: 100%; text-align: center; border-collapse: collapse;">
+	  <tr>
+		<td style="text-align: center;">
+		  <img src="flip0.png" width="400px"/>
+		  <figcaption>Before any edge flips</figcaption>
+		</td>
+		<td style="text-align: center;">
+		  <img src="flip1.png" width="400px"/>
+		  <figcaption>After 1 edge flip</figcaption>
+		</td>
+	  </tr>
+	  <tr>
+		<td style="text-align: center;">
+		  <img src="flip2.png" width="400px"/>
+		  <figcaption>After 2 edge flips</figcaption>
+		</td>
+		<td style="text-align: center;">
+		  <img src="flip3.png" width="400px"/>
+		  <figcaption>After 3 edge flips</figcaption>
+		</td>
+	  </tr>
+	  <tr>
+		<td style="text-align: center;">
+		  <img src="flip4.png" width="400px"/>
+		  <figcaption>After 4 edge flips</figcaption>
+		</td>
+	  </tr>
+	</table>
+</div>
 		<h3>Part 5: Edge split</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
