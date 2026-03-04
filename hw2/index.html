@@ -164,7 +164,33 @@
 	</table>
 </div>
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			To implement edge splitting, first I added a boundary check. If the edge is a boundary, we just return the corresponding vertex. Next, I created variables for each edge, face, half edge, and vertex. From there, I created new edges, faces, half edges, and vertices for each new feature
+			that I had to create. Then, I went through each newly created feature and set their attributes. Starting with vertices, I averaged points b and c to get the position of M, and set corresponding attributes of M and updated the halfEdges of each other vertex. Next, I updated all the attributes
+			for the new halfedges using the setNeighbor function provided. Finally, I updated the attributes for the edges and the faces. The most difficult part in debugging this part was making sure I didnt forget setting any attributes. For example, I had forgotten to update the original edges
+			to point to the newly created half edges. 
+		</p>
+		<p>Below is my example of a 6 point bezier curve.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p5-original.png" width="400px"/>
+				  <figcaption>Original</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p5-split.png" width="400px"/>
+				  <figcaption>After splits</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p5-split-and-flip.png" width="400px"/>
+				  <figcaption>After split and flipping</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
