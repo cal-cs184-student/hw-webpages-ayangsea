@@ -193,21 +193,90 @@
 		</div>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			I implemented the loop subdivision exactly how it was recommended and laid out in the comments of the upsample function. First, we calculated the new vertex positions for each existing vertex and each edge that would get split. 
+			Then, we split every edge, keeping track of new and old edges, and then flip new edges that connect one new vertex and one old vertex. Finally, we update the actual positions of the new and old vertices. 
+			One interesting issue I found while debugging was not knowing which edges to mark as new and old while splitting. Eventually, I figured out that only the edge that cuts accross the triangle should be marked as new.
+		</p>
 
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			Below are some examples of meshes before and after upsampling.
+		</p>
 
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p6-cube-0.png" width="400px"/>
+				  <figcaption>Original cube</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p6-cube-1.png" width="400px"/>
+				  <figcaption>After 1 upsample</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p6-cube-2.png" width="400px"/>
+				  <figcaption>After 2 upsamples</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p6-taurus-0.png" width="400px"/>
+				  <figcaption>Original torus</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p6-taurus-1.png" width="400px"/>
+				  <figcaption>After 1 upsample</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p6-taurus-2.png" width="400px"/>
+				  <figcaption>After 2 upsamples</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			We notice that after upsampling, edges and corners become significantly smoother and rounded. This effect can be reduced by presplitting edges near sharper features. This way, when vertex positions are calculated using 
+			averages of neighbors, the calculation is more confined to a smaller area, leading to less drastic changes.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p6-cube-0.png" width="400px"/>
+				  <figcaption>Original cube</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p6-cube-5.png" width="400px"/>
+				  <figcaption>After 5 upsamples</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<p>
+			We notice the cube above becomes lopsided after upsampling. This is because the cube is not divided symmetrically into triangles, since each face of the cube is divided into two triangles along only one of the diagonals. If we want the cube to not be lopsided after upsampling, we need to ensure that the cube is divided
+			symmetrically before upsampling, which we can do by splitting each edge along the face of the cube as shown below. In addition, I flipped the existing edges of the cube, to excentuate the vertices of the cube so they would not get smoothed out as much. 
+			These augmentations worked to make the cube upsample more symmetric because it made the mesh closer to having regular connectivity (where each vertex has degree 4), resulting in the subdivisions to be applied more uniformly accross the cube.
+		</p>
+
+		<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			<tr>
+			<td style="text-align: center;">
+				<img src="p6-cube-0.png" width="400px"/>
+				<figcaption>Original cube</figcaption>
+			</td>
+			<td style="text-align: center;">
+				<img src="p6-cube-presplit.png" width="400px"/>
+				<figcaption>Cube after presplitting and flipping</figcaption>
+			</td>
+			<td style="text-align: center;">
+				<img src="p6-cube-presplit-upsampled.png" width="400px"/>
+				<figcaption>Presplit cube after upsampling</figcaption>
+			</td>
+			</tr>
+		</table>
 		</div>
 	</body>
 </html>
