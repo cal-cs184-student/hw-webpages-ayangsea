@@ -48,29 +48,37 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			In our ray generation pipeline, we first convert from image space to camera space. Since image coordinates range from 0 to 1 and camera coordinates range from -0.5 to 0.5, 
+			we had to adjust accordingly. Then, we scaled the points by tan(hFov / 2) on the x axis and tan(hFov / 2) on the y axis, and setting z = -1 to obtain the camera coordinates. To convert to world space,
+			we multiply this vector by the c2w matrix and normalize it. Then, we generate the ray with that direction vector, and also set max_t to fclip and min_t to nclip. <br/><br/>
+			
+			Next, the ray is tested for intersections with each object in the scene, updating the max_t value along the way to reduce the number of calculations that may happen. The closest intersection
+			is stored in the intersection struct and then passed to shading. 
+		</p>
+		<p>
+			Our triangle intersection method precisely follows the Moller Trumbore Algorithm outlined in class. Using the three points of the triangle, we compute E1, E2, S, S1, and S2, and we derive
+			t, b1, and b2, and b3 (where b3 - 1 - b1 - b2). We are able to detect if the ray intersects with the triangle if the following cases are satisfied: if min_t &lt; t &lt; max_t and b1 &gt;= 0
+			and b2 &gt;= 0 and b1 + b2 &lt;= 1. If this condition is satisfied, we calculate the surface norm of the intersection as b1 * n1 + b2 * n2 + b3 * n3; where n1, n2, and n3 are the vertex normals of the triangle
+		</p>
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<p>Below are some examples of small dae images with normal shading.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="CBgems.png" width="400px"/>
+				  <figcaption>CBgems</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="CBspheres.png" width="400px"/>
+				  <figcaption>CBSpheres</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="CBcoil.png" width="400px"/>
+				  <figcaption>CBcoil.</figcaption>
 				</td>
 			  </tr>
 			</table>
