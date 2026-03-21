@@ -85,7 +85,40 @@
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			We first compute the bounding box of all primitives and if there are few enough, just make a leaf node. Otherwise we find the best axis to split on by computing the average centroid of all primitives and counting how balanced a split would be on each axis, the axis whose split is most even (closest to half on each side) is chosen. We then partition the primitives into two groups based on whether their centroid falls below or above the
+			 average on that axis, with a fallback to splitting at the midpoint if all primitives end up on one side. Finally we create our node and recursively build the left and right child nodes, setting the left and right attributes of the current node respectively. 
+		</p>
+		<p>Below are some examples of large dae files that can only render with bvh acceleration.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="CBdragon.png" width="400px"/>
+				  <figcaption>CBdragon</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="CBlucy.png" width="400px"/>
+				  <figcaption>CBlucy</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="peter.png" width="400px"/>
+				  <figcaption>peter.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="cow.png" width="400px"/>
+				  <figcaption>cow.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<p>
+			When running the command ╰─ ./pathtracer -t 8 -r 800 600 -f CBdragon.png ../dae/sky/CBdragon.dae (trying to rdner the dragon file with 8 threads), it took my local machine 236.3127s to run without BVH acceleration,
+			but with BVH acceleration, it only took 0.0696s, a speedup of around 3,400 times. Similarly, for the cow dae file, rendering without BVH took 9.7753s and with BVH took 0.0332s. Overall, rendering with BVH is much faster
+			than without, and some objects would be impsosible to render without it. 
+		</p>
 
 		<h2>Part 3: Direct Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
