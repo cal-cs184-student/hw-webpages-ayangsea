@@ -32,8 +32,8 @@
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: (TODO) <a href="https://cal-cs184-student.github.io/hw-webpages-ayangsea">https://cal-cs184-student.github.io/hw-webpages-ayangsea</a>
+		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/hw3-pathtracer-andye">https://github.com/cal-cs184-student/hw2-meshedit-andyye</a>
 		
 		<figure>
 			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
@@ -185,21 +185,42 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 5: Adaptive Sampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	 	<p>
+			Adaptive sampling is a technique that is used to minimize the number of samples we use per pixel by trying to identify when each pixel has converged. At every fixed interval of samples for each pixel, we calculate the mean and standard deviation to obtain the pixel's convergence with the equation \(I = \frac{1.96\,\sigma}{\sqrt{\mu}} \). If this Z score is less than a max tolerance defined in the parameters,then we will break out of the 
+			stop sampling and go onto the next pixel. Our implementation follows exactly what is provided on the spec. In our sampling loop, we keep track of two variables \(S_1 = \sum x_i \) and \(S_2 = \sum x_i^2 \). We also keep track of a # samples tried variable, and check if it is a multiple of our interval. If it is, we use our predefined \(S_1) and \(S_2) variables to compute the mean, std dev, and radiance. If it is less than our threshold,
+			we break out of the sampling loop early. We are sure to populate sampleCountBuffer with the correct amount of samples actually used. 
+		</p>
+		<p>
+			Below are two scenes rendered with 2048 samples per pixel, along with their sampling rate images.
+		</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny.png" width="400px"/>
+				  <figcaption>bunny</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny_rate.png" width="400px"/>
+				  <figcaption>bunny rate</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="dragon.png" width="400px"/>
+				  <figcaption>dragon.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="dragon_rate.png" width="400px"/>
+				  <figcaption>dragon rate.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+			
 		</div>
 	</body>
 </html>
