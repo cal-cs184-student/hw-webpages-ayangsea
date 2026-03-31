@@ -29,11 +29,12 @@
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 3 Write-Up</h1>
 		<div style="text-align: center;">Names: </div>
-
+			<p style="text-align: center;">Owen Ye, Andy Yang.</p>
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cal-cs184-student.github.io/hw-webpages-ayangsea">https://cal-cs184-student.github.io/hw-webpages-ayangsea</a>
-		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/hw3-pathtracer-andye">https://github.com/cal-cs184-student/hw2-meshedit-andyye</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-ayangsea">https://cal-cs184-student.github.io/hw-webpages-ayangsea</a>
+		<br>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/hw3-pathtracer-andye">https://github.com/cal-cs184-student/hw2-meshedit-andyye</a>
 		
 		<figure>
 			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
@@ -182,6 +183,8 @@
 		samples directions toward actual light sources rather than random directions in the hemisphere, and delta lights only require a single sample. 
 		Additionally, samples directed behind the surface are skipped early, further reducing wasted computation.
 		<h2>Part 4: Global Illumination</h2>
+		
+		
 		For indirect lighting, I implemented at_least_one_bounce_radiance, which traces multi-bounce inverse paths through the scene. At each hit point, I call one_bounce_radiance to get the direct lighting, then sample a new direction using sample_f on the BSDF to figure out where the light came from to arrive at that point. I cast a ray in that sampled direction and recursively call at_least_one_bounce_radiance on the new hit point, weighting the result by BSDF × cos θ / PDF. <br></br>
 		If isAccumBounces is true, I accumulate all light along the path up to max_ray_depth. If false, I only return the light at the max_ray_depth-th bounce. The recursion stops when r.depth <= 1, and I initialize the camera ray's depths to max_ray_depth in raytrace_pixel, decrementing with each recursive call.<br></br>
 		Since integrating over all paths of all lengths is computationally infeasible, I use Russian Roulette with a 0.35 termination probability (as suggested by the spec) for unbiased random termination, dividing by the continuation probability to compensate and make sure the estimated stays unbiased. I always trace at least one indirect bounce regardless of Russian Roulette. If the new ray doesn't intersect the scene, it can't recurse.<br></br>
@@ -242,6 +245,10 @@
 				<figcaption>max_ray_depth = 5</figcaption>
 			</figure>
 		</div>
+
+		In the 2nd bounce (m=2), we can see soft indirect light illuminating areas not directly visible to the light source, such as the underside of the bunny as well as the ceiling. There is also noticeable color bleeding from the red and blue walls onto nearby surfaces. 
+		The 3rd bounce (m=3) is much dimmer since light loses energy at each bounce, but still contributes subtle ambient lighting in corners and crevices. These indirect bounces are what set path tracing apart from rasterization, which can only compute direct lighting and 
+		relies on approximations like ambience to fake indirect effects. Path tracing naturally captures color bleeding, soft shadows, and multi-bounce illumination for a more physically accurate result.
  
 		<p>Below are renders of CBbunny.dae with accumulated bounces (<code>isAccumBounces=true</code>) for max_ray_depth 0 through 5 (1024 samples per pixel).</p>
 		<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
@@ -270,6 +277,42 @@
 				<figcaption>max_ray_depth = 5</figcaption>
 			</figure>
 		</div>
+
+		<p>CBbunny with russian roulette rendering.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny_rr_m0.png" width="400px"/>
+				  <figcaption>max_ray_depth = 0</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny_rr_m1.png" width="400px"/>
+				  <figcaption>max_ray_depth = 1</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny_rr_m2.png" width="400px"/>
+				  <figcaption>max_ray_depth = 2</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny_rr_m3.png" width="400px"/>
+				  <figcaption>max_ray_depth = 3</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny_rr_m4.png" width="400px"/>
+				  <figcaption>max_ray_depth = 4</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny_rr_m100.png" width="400px"/>
+				  <figcaption>max_ray_depth = 100</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>	
 
 		<p>Below are renders of CBbunny.dae with varying samples per pixel (4 light rays, max_ray_depth = 5).</p>
 		<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
@@ -302,6 +345,8 @@
 				<figcaption>1024 samples per pixel</figcaption>
 			</figure>
 		</div>
+
+		
 
 		<h2>Part 5: Adaptive Sampling</h2>
 	 	<p>
@@ -337,9 +382,7 @@
 			</table>
 		</div>
 
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			
+	
 		</div>
 	</body>
 </html>
