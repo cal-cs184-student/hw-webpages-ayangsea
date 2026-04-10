@@ -83,10 +83,75 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 3: Handling collisions with other objects</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			For collisions with sphere, we first calculate whether or not the point mass' position is inside the sphere. If it is outside, then, we calculate the direction of the position vector to the center of the sphere. Then, we move in that direction from the origin by radius distance
+			to get the tangent point. Next, we calculate the correction vector by calculating the tangent point minus the last position, then we update the point mass' position by last position plus the correction vector scaled by the friciton constant.
+		</p>
+		<p>
+			For collisions with the plane, we first calculate whether or not the point mass went from one side of the plane to the other. To do this, we calculate the dot products of both the position minus the plane's point with the normal and the last position minus the plane's point with the normal.
+			If they have the same sign, we know that the point did not collide. Then, we project the vector pm.position - plane.point onto the plane's normal vector to get the point of intersection with the plane. We then calculate the correction vector the same way as for spheres and update it the same way.
+		</p>
 
 		<h2>Part 4: Handling self-collisions</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+		To handle self-collisions efficiently, we implemented spatial hashing to avoid an O(n^2) comparison of every point mass against every other point mass.<br><br>
+		In the function hash_position, we partition 3D space into boxes of dimensions w * h * t where w = 3 * width / num_width_points, h = 3 * height / num_height_points, and t = max(w, h). Each position is truncated to its box coordinate using fmod, then hashed to a unique float using the large prime number scheme (x * p + y) * p + z.<br><br>
+		In the function build_spatial_map, we clear the existing map, then iterate over all point masses and insert each one into the vector corresponding to its hashed position. This groups nearby point masses into the same bucket.<br><br>
+		In the function self_collide, for a given point mass we look up its hash bucket and check all candidate point masses within it. For each candidate that is within 2 * thickness distance (and is not the point mass itself), we compute a correction vector that would push the point mass to be exactly 2 * thickness away. Then, accumulate all correction vectors, average them, scale by simulation_steps, add the result to the point mass position
+		</p>
+		
+		<p>Images showing how the cloth folds onto itself</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p4-1.png" width="400px"/>
+				  <figcaption>Beginning</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p4-2.png" width="400px"/>
+				  <figcaption>Middle</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p4-3.png" width="400px"/>
+				  <figcaption>End</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>Varying values of ks and density</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p4-density_5_ks_5000.png" width="400px"/>
+				  <figcaption>Density=5, ks=5000</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p4-density_30_ks_5000.png" width="400px"/>
+				  <figcaption>Density=30, ks=5000</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="p4-density_15_ks_1000.png" width="400px"/>
+				  <figcaption>Density=15, ks=1000</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="p4-density_15_ks_10000.png" width="400px"/>
+				  <figcaption>Density=15, ks=10000</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			Varying ks changes the stiffness of the spring. With low ks values, the cloth is more loose and floppy. With high ks values, the cloth is more stiff and rigid and resists deformation
+			Varying density changes how heavy the spring is. Low density values result in the cloth being lighter and the springs bounce up more. With high density values, the spring sags under gravity more and it is harder for it to hold up.
+		</p>
 
 		<h2>Part 5: Shaders</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
