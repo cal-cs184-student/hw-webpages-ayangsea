@@ -46,8 +46,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
-
+		In this homework, we built a physically-based path tracer from the ground up, progressively adding features to transform a basic ray caster into a full global illumination renderer. We started with ray generation and primitive intersection (Part 1), implementing camera ray construction and the Moller-Trumbore algorithm for triangle intersection. In Part 2, we added a BVH acceleration structure that made rendering complex scenes like the dragon (100k+ triangles) feasible, achieving speedups of over 3,000x. Part 3 introduced direct illumination via both uniform hemisphere sampling and importance sampling, where we saw firsthand how targeting light sources dramatically reduces noise. In Part 4, we implemented full global illumination with recursive bounce tracing and Russian Roulette termination, enabling realistic effects like color bleeding and soft indirect lighting that distinguish path tracing from rasterization. Finally, Part 5 added adaptive sampling to concentrate computation on pixels that need it most, reducing render times without sacrificing quality.
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		<p>
 			In our ray generation pipeline, we first convert from image space to camera space. Since image coordinates range from 0 to 1 and camera coordinates range from -0.5 to 0.5, 
@@ -191,15 +190,18 @@
 		In est_radiance_global_illumination, I combine the zero-bounce radiance (emitted light) with the result of at_least_one_bounce_radiance for the full global illumination estimate.
 
 			<p>Below are some images rendered with global (direct and indirect) illumination.</p>
-		<div style="display: flex; gap: 20px; justify-content: center;">
+		<div style="display: flex-wrap; gap: 20px; justify-content: center;">
 			<figure>
 				<img src="bunny_global.png" alt="Global illumination bunny" width="480"/>
 				<figcaption>CBbunny with Global Illumination (1024 spp)</figcaption>
 			</figure>
+			<br></br>
 			<figure>
+
 				<img src="spheres_global.png" alt="Global illumination spheres" width="480"/>
 				<figcaption>CBspheres with Global Illumination (1024 spp)</figcaption>
 			</figure>
+			<br></br>
 			<figure>
 				<img src="dragon_global.png" alt="Global illumination dragon" width="480"/>
 				<figcaption>Dragon with Global Illumination (1024 spp)</figcaption>
