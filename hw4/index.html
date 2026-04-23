@@ -48,9 +48,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
-
-		<h2>Part 1: Masses and springs</h2>
+					In this homework, we implemented a real-time cloth simulation using a mass-and-spring system. We started by building the cloth's grid of point masses connected by structural, shearing, and bending springs (Part 1), then used Verlet integration with external forces and spring correction to simulate motion over time (Part 2). We implemented collision handling for spheres and planes (Part 3) and spatial hashing for efficient self-collision detection to prevent the cloth from clipping through itself (Part 4). Finally, we wrote GLSL shaders including Blinn-Phong lighting, texture mapping, bump and displacement mapping, and environment-mapped mirror reflections (Part 5). One of the most interesting things we learned was how much the simulation parameters of spring constant, density, and damping affect the cloth's behavior, and how small changes can make the cloth look like completely different materials. 
 		<p></p>
 		<figure>
 			<img src="p1-pinned2.png" alt="pinned2" style="width:70%"/>
@@ -250,11 +248,78 @@
 		</p>
 
 		<h2>Part 5: Shaders</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			A shader program runs on the GPU and determines how each vertex and pixel appears on screen. The vertex shader processes each vertex of a mesh, transforming positions from 3D 
+			world space into screen space and passing along normals, texture coordinates, and positions. The fragment shader then runs on every pixel within a triangle, using the interpolated data from the vertex shader to compute the final color via lighting and material effects.
+			<br></br>
 
+			The Blinn-Phong model sums three lighting components. Ambient (ka = 0.1, Ia = 1.0) provides constant base illumination so surfaces are never fully black. Diffuse (kd = 0.6) models light scattering equally in all directions, scaled by light intensity over distance squared 
+			and the dot product of the normal n with light direction l. Specular (ks = 0.8, p = 32) creates sharp highlights using the half-vector h between the light and view directions, raising dot(n, h) to the power p.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="ambient_only.png" width="400px"/>
+				  <figcaption>Ambient component only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="diffuse_only.png" width="400px"/>
+				  <figcaption>Diffuse component only</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="specular_only.png" width="400px"/>
+				  <figcaption>Specular component only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="full_phong.png" width="400px"/>
+				  <figcaption>Full Blinn-Phong model</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+				<h3>Custom Texture Mapping</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="texture_initial.png" width="400px"/>
+				  <figcaption>Texture on cloth before falling</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="texture_top.png" width="400px"/>
+				  <figcaption>Texture on cloth draped over sphere (top view)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="texture_fallen.png" width="400px"/>
+				  <figcaption>Texture on cloth after falling</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+				<h3>Mirror Shader</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="mirror_cloth.png" width="400px"/>
+				  <figcaption>Mirror shader on cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="mirror_ball.png" width="400px"/>
+				  <figcaption>Mirror shader on sphere</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
+
 		<h2>Additional Notes (please remove)</h2>
 		<ul>
 			<li>You can also add code if you'd like as so: <code>code code code</code></li>
