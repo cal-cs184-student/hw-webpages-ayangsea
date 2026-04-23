@@ -80,8 +80,105 @@
 		</div>
 
 		<h2>Part 2: Simulation via numerical integration</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		When I changed the spring constant ks, I noticed it had a big effect on the stiffness and stretchiness of the cloth. When I set ks to a low value of 5, 
+		I saw the cloth sag deeply between the two pinned points, and it took a while to settle into its resting position. Also, I could see it swaying back and forth
+		before finally coming to rest. To me it looked like a thin, loose fabric that was easily stretched and deformed. When I increased ks up to 50,000, I saw the cloth
+		 drop almost immediately into its final position with only a small bounce at the bottom. I noticed the top edge stayed nearly flat between the pinned corners, and the whole cloth looked rigid and 
+		 kind of like a wall to me, with very few folds or wrinkles.
+		</p>
+ 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="low_ks.png" width="400px"/>
+				  <figcaption>ks = 5 N/m — cloth sags deeply, very stretchy</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="default_ks.png" width="400px"/>
+				  <figcaption>ks = 5,000 N/m (default)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="high_ks.png" width="400px"/>
+				  <figcaption>ks = 50,000 N/m — rigid, flat top edge, minimal sag</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+ 
+		<p>
+		When I changed the density, I noticed it had a big impact on how heavy the cloth felt.When I changed the density, I noticed it had a big impact on how heavy the cloth felt.
+		 With a low density of 1, the cloth looked much lighter and barely sagged between the pinned points. It also settled into its resting position quickly without much swinging, since gravity wasn't pulling on it as hard.
+		 When I increased the density to 100, I could see the cloth drooping deeply between the pinned corners under its own weight. It also swung with more momentum when falling and took longer to come to rest. 
+		</p>
+ 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="low_density.png" width="400px"/>
+				  <figcaption>density = 2 g/cm² — lightweight, minimal sag</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="default_density.png" width="400px"/>
+				  <figcaption>density = 15 g/cm² (default)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="high_density.png" width="400px"/>
+				  <figcaption>density = 1000 g/cm² — heavy, deep droop</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+ 
+		<p>
+		When I changed the damping parameter, I noticed it had the largest effect on the cloth. When I set damping to its lowest value of 0, the cloth started swinging around wildly and didn't come to rest. 
+ 		When I set damping to its highest value of 1, the cloth moved incredibly slowly, gliding smoothly downward with no oscillation at all, and then settled directly into its final resting position below the two pinned points.
+		
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="low_damping.png" width="400px"/>
+				  <figcaption>damping = 0 — cloth swings wildly, never settles</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="default.png" width="400px"/>
+				  <figcaption>damping = 0.2  (default)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="high_damping.png" width="400px"/>
+				  <figcaption>damping = 1  — glides slowly, no oscillation</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
+		<p>Screenshot of shaded cloth from scene/pinned4.json in its final resting state (default parameters):</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="default_view_front.png" width="400px"/>
+				  <figcaption>Front view</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="default_view_side.png" width="400px"/>
+				  <figcaption>Side view</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="default_view_back.png" width="400px"/>
+				  <figcaption>Back view</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h2>Part 3: Handling collisions with other objects</h2>
 		<p>
 			For collisions with sphere, we first calculate whether or not the point mass' position is inside the sphere. If it is outside, then, we calculate the direction of the position vector to the center of the sphere. Then, we move in that direction from the origin by radius distance
@@ -91,7 +188,6 @@
 			For collisions with the plane, we first calculate whether or not the point mass went from one side of the plane to the other. To do this, we calculate the dot products of both the position minus the plane's point with the normal and the last position minus the plane's point with the normal.
 			If they have the same sign, we know that the point did not collide. Then, we project the vector pm.position - plane.point onto the plane's normal vector to get the point of intersection with the plane. We then calculate the correction vector the same way as for spheres and update it the same way.
 		</p>
-
 		<h2>Part 4: Handling self-collisions</h2>
 		<p>
 		To handle self-collisions efficiently, we implemented spatial hashing to avoid an O(n^2) comparison of every point mass against every other point mass.<br><br>
