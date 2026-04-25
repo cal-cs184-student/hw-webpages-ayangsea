@@ -316,6 +316,35 @@
 			  </tr>
 			</table>
 		</div>
+
+		<h3>Bump vs Displacement Mapping </h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="displacement_16.png" width="400px"/>
+				  <figcaption>Displacement resolution=16</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="displacement_128.png" width="400px"/>
+				  <figcaption>Displacement resolution=128</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bump_16.png" width="400px"/>
+				  <figcaption>Bump resolution=16</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bump_128.png" width="400px"/>
+				  <figcaption>Bump resolution=128</figcaption>
+				</td>
+			  </tr>
+			</table>
+			<p>Bump resolution simulates surface details by using surface texture without changing the actual geometry of the mesh, while displacement mapping changes the actual geometry. This is obvious in the render, as bump mapping is a lot more flat than
+				displacement mapping. In displacement mapping, you can way more clearly see the depth of the texture than bump mapping. 
+			</p>
+		</div>
 		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
