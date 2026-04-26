@@ -346,19 +346,35 @@
 			</p>
 		</div>
 		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
+		<h3>Feature 1: Spatially Varying Wind System</h3>
+<p>
+We implemented a wind force system that applies spatially and temporally varying forces across the cloth surface. Unlike simple uniform wind, this system creates realistic turbulence patterns.
+The wind strength varies across the cloth using sinusoidal patterns based on position, and time-based oscillations simulate gusts and fluctuations. We also added real-time GUI controls for wind strength, direction (x, y, z), and enable/disable.
+</p>
 
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+<p>
+The core calculation modulates a base wind vector by position-dependent factors (using sin/cos over the cloth's x and z coordinates) and a time-dependent factor for turbulence. A vertical oscillation component is also added for natural flutter. Before implementing wind, only gravity and spring forces affected cloth movement. After, the cloth exhibits realistic flutter, waves, and billowing effects.
+</p>
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+	<table style="width: 100%; text-align: center; border-collapse: collapse;">
+	  <tr>
+		<td style="text-align: center;">
+		  <img src="wind_low.png" width="400px"/>
+		  <figcaption>Wind strength = 5 N - weaker wind
+		<td style="text-align: center;"> 
+		  <img src="wind_high.png" width="400px"/>
+		  <figcaption>Wind strength = 100 N — strong wind
+		</td>
+	  </tr>
+	</table>
+</div>
+
+<p>
+When I set the wind strength to a low value of 5, the cloth draped over the sphere with only a slight lateral push to the right. It still mostly hung down under gravity, with some gentle flutter from the turbulence variation. When I increased the wind strength to 100, the cloth was blown fully horizontally off of the sphere, and I was only able to take a screenshot while quickly pausing the simulation. The spatially varying turbulence was more visible at high strength, creating uneven ripples across the surface rather than a perfectly flat sheet.
+</p>
+
+		
 		</div>
 	</body>
 </html>
