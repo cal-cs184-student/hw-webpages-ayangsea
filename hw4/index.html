@@ -57,6 +57,14 @@
 			<figcaption>Screenshot where structure of point masses and strings are visible</figcaption>
 		</figure>
 
+		<figure>
+			<img src="pinned_above.png" alt="pinned2" style="width:70%"/>
+			<figcaption>Image from above</figcaption>
+		</figure>
+		<figure>
+			<img src="pinned_below.png" alt="pinned2" style="width:70%"/>
+			<figcaption>Image from below</figcaption>
+		</figure>
 		<p>Variations of constraints</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -187,6 +195,37 @@
 		<p>
 			For collisions with the plane, we first calculate whether or not the point mass went from one side of the plane to the other. To do this, we calculate the dot products of both the position minus the plane's point with the normal and the last position minus the plane's point with the normal.
 			If they have the same sign, we know that the point did not collide. Then, we project the vector pm.position - plane.point onto the plane's normal vector to get the point of intersection with the plane. We then calculate the correction vector the same way as for spheres and update it the same way.
+		</p>
+
+		<p>Screenshots of cloth draped over sphere with varying ks values:</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="ks_500.png" width="400px"/>
+				  <figcaption>ks = 500 N/m</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="ks_5000.png" width="400px"/>
+				  <figcaption>ks = 5,000 N/m (default)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="ks_50000.png" width="400px"/>
+				  <figcaption>ks = 50,000 N/m</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>Screenshot of cloth lying at rest on the plane:</p>
+		<figure>
+			<img src="lying_plane.png" alt="Cloth lying on plane" style="width:70%"/>
+			<!-- <figcaption>Cloth resting peacefully on the plane</figcaption> -->
+		</figure>
+		<p>
+		With ks = 500, the cloth drapes very loosely over the sphere, conforming tightly to its shape with many small, fine folds and wrinkles hanging down. The cloth sags deeply under gravity and the bottom edges hang close together, almost like a thin silk draped over a ball. With the default ks = 5,000, the cloth sits more naturally on the sphere with fewer, broader folds. It doesn't conform as tightly to the sphere's surface and the draping looks like a medium-weight fabric. With ks = 50,000, the cloth is very stiff and barely conforms to the sphere at all. The folds are wide and coarse, and the cloth extends outward from the sphere rather than hugging it, almost like a stiff tablecloth or cardboard draped over a ball.
 		</p>
 		<h2>Part 4: Handling self-collisions</h2>
 		<p>
