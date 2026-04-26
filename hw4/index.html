@@ -27,7 +27,7 @@
 	</head>
 	<body>
 		<div class="container">
-		<h1>CS184/284A Spring 2025 Homework 4 Write-Up</h1>
+		<h1>CS184/284A Spring 2026 Homework 4 Write-Up</h1>
 		<div style="text-align: center;">Names: </div>
 
 		<br>
@@ -36,7 +36,7 @@
 
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/hw-webpages-ayangsea">https://github.com/cal-cs184-student/hw-webpages-ayangsea</a>
+		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/hw4-clothsim-andy_ye-1">https://github.com/cal-cs184-student/hw4-clothsim-andy_ye-1</a>
 
 		<figure>
 			<img src="clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
@@ -49,13 +49,15 @@
 
 		<h2>Overview</h2>
 					In this homework, we implemented a real-time cloth simulation using a mass-and-spring system. We started by building the cloth's grid of point masses connected by structural, shearing, and bending springs (Part 1), then used Verlet integration with external forces and spring correction to simulate motion over time (Part 2). We implemented collision handling for spheres and planes (Part 3) and spatial hashing for efficient self-collision detection to prevent the cloth from clipping through itself (Part 4). Finally, we wrote GLSL shaders including Blinn-Phong lighting, texture mapping, bump and displacement mapping, and environment-mapped mirror reflections (Part 5). One of the most interesting things we learned was how much the simulation parameters of spring constant, density, and damping affect the cloth's behavior, and how small changes can make the cloth look like completely different materials. 
+		
+		<h2>Part 1: Masses and springs</h2>
 		<p></p>
 		<figure>
 			<img src="p1-pinned2.png" alt="pinned2" style="width:70%"/>
-			<figcaption>Screenshot of pinned2 where structure of point masses and strings are visible</figcaption>
+			<figcaption>Screenshot where structure of point masses and strings are visible</figcaption>
 		</figure>
 
-		<p>Table with mutliple variations of constraints</p>
+		<p>Variations of constraints</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
